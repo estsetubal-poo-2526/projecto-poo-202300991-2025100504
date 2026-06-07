@@ -1,4 +1,4 @@
 package tictactoe.controller;
 
-public class ResultController {
+public class AppController {
 }
