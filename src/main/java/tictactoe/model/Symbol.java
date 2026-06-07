@@ -1,4 +1,7 @@
 package tictactoe.model;
 
-public class Symbol {
+public enum Symbol {
+    X,
+    O,
+    EMPTY
 }

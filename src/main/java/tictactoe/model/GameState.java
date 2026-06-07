@@ -1,4 +1,8 @@
 package tictactoe.model;
 
-public class GameState {
+public enum GameState {
+    NOT_STARTED,
+    RUNNING,
+    WIN,
+    DRAW
 }
