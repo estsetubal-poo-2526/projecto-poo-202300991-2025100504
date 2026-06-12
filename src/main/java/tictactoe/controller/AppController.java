@@ -43,6 +43,14 @@ public class AppController {
         }
     }
 
+    // Добавил метод
+    public void restartGame() {
+        if(gameModel != null) {
+            gameModel.start();
+            setContent(new GameView(this, gameModel));
+        }
+    }
+
     public void showMenu() {
         setContent(new MenuView(this));
         stage.show();

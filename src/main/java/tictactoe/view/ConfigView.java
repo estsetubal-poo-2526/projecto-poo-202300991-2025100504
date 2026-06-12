@@ -15,6 +15,8 @@ public class ConfigView extends BorderPane {
     private final AppController controller;
     private TextField playerXInput;
     private TextField playerOInput;
+    private HBox playerXInputBox;
+    private HBox playerOInputBox;
 
     public ConfigView(AppController controller) {
         this.controller = controller;
@@ -65,13 +67,74 @@ public class ConfigView extends BorderPane {
         );
         startBtn.setMaxWidth(Double.MAX_VALUE);
         startBtn.setEffect(new DropShadow(20, Color.web("#3b82f6", 0.6)));
+        Label errorLabel = new Label();
+        errorLabel.setStyle(
+                "-fx-text-fill: #ef4444;" +
+                        "-fx-font-size: 13px;" +
+                        "-fx-font-weight: bold;"
+        );
+        errorLabel.setMaxWidth(Double.MAX_VALUE);
+        errorLabel.setAlignment(Pos.CENTER);
+        errorLabel.setVisible(false);
+        errorLabel.setManaged(false);
+
         startBtn.setOnAction(e -> {
-            String nameX = playerXInput.getText().trim().isEmpty() ? "Jogador X" : playerXInput.getText();
-            String nameO = playerOInput.getText().trim().isEmpty() ? "Jogador O" : playerOInput.getText();
+            String nameX = playerXInput.getText().trim();
+            String nameO = playerOInput.getText().trim();
+
+            String normalBoxStyle =
+                    "-fx-background-color: #0a1220;" +
+                            "-fx-background-radius: 8px;" +
+                            "-fx-border-color: #1e3a5f;" +
+                            "-fx-border-radius: 8px;" +
+                            "-fx-border-width: 1.5px;" +
+                            "-fx-padding: 0 10px;";
+
+            String errorBoxStyle =
+                    "-fx-background-color: #0a1220;" +
+                            "-fx-background-radius: 8px;" +
+                            "-fx-border-color: #ef4444;" +
+                            "-fx-border-radius: 8px;" +
+                            "-fx-border-width: 2px;" +
+                            "-fx-padding: 0 10px;";
+
+            playerXInputBox.setStyle(normalBoxStyle);
+            playerOInputBox.setStyle(normalBoxStyle);
+
+            if (nameX.isEmpty() || nameO.isEmpty()) {
+                errorLabel.setText("Preencha o nome dos dois jogadores.");
+                errorLabel.setVisible(true);
+                errorLabel.setManaged(true);
+
+                if (nameX.isEmpty()) {
+                    playerXInputBox.setStyle(errorBoxStyle);
+                }
+
+                if (nameO.isEmpty()) {
+                    playerOInputBox.setStyle(errorBoxStyle);
+                }
+
+                return;
+            }
+
+            if (nameX.equalsIgnoreCase(nameO)) {
+                errorLabel.setText("Os nomes dos jogadores devem ser diferentes.");
+                errorLabel.setVisible(true);
+                errorLabel.setManaged(true);
+
+                playerXInputBox.setStyle(errorBoxStyle);
+                playerOInputBox.setStyle(errorBoxStyle);
+
+                return;
+            }
+
+            errorLabel.setVisible(false);
+            errorLabel.setManaged(false);
+
             controller.showGame(nameX, nameO);
         });
 
-        card.getChildren().addAll(rowX, rowO, sep, startBtn);
+        card.getChildren().addAll(rowX, rowO, sep, errorLabel, startBtn);
 
         Label footer = new Label("ⓘ  Digite os nomes dos jogadores para começar.");
         footer.setStyle("-fx-text-fill: #64748b; -fx-font-size: 12px;");
@@ -90,14 +153,12 @@ public class ConfigView extends BorderPane {
 
         TextField input = new TextField(defaultValue);
         input.setStyle(
-                "-fx-background-color: #0a1220;" +
+                "-fx-background-color: transparent;" +
                         "-fx-text-fill: white;" +
-                        "-fx-prompt-text-fill: #475569;" +
                         "-fx-font-size: 14px;" +
-                        "-fx-background-radius: 8px;" +
-                        "-fx-border-color: #1e3a5f;" +
-                        "-fx-border-radius: 8px;" +
-                        "-fx-padding: 10px 12px;"
+                        "-fx-padding: 10px 0;" +
+                        "-fx-border-color: transparent;" +
+                        "-fx-border-width: 0;"
         );
         HBox.setHgrow(input, Priority.ALWAYS);
 
@@ -105,11 +166,32 @@ public class ConfigView extends BorderPane {
         userIco.setStyle("-fx-text-fill: #475569; -fx-font-size: 13px;");
         HBox inputBox = new HBox(8, userIco, input);
         inputBox.setAlignment(Pos.CENTER_LEFT);
-        inputBox.setStyle("-fx-background-color: #0a1220; -fx-background-radius: 8px; -fx-border-color: #1e3a5f; -fx-border-radius: 8px; -fx-padding: 0 10px;");
-        HBox.setHgrow(inputBox, Priority.ALWAYS);
-        input.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px 0;");
+        inputBox.setStyle(
+                "-fx-background-color: #0a1220;" +
+                        "-fx-background-radius: 8px;" +
+                        "-fx-border-color: #1e3a5f;" +
+                        "-fx-border-radius: 8px;" +
+                        "-fx-border-width: 1.5px;" +
+                        "-fx-padding: 0 10px;"
+        );
 
-        if (isX) playerXInput = input; else playerOInput = input;
+        HBox.setHgrow(inputBox, Priority.ALWAYS);
+        input.setStyle(
+                "-fx-background-color: transparent;" +
+                        "-fx-text-fill: white;" +
+                        "-fx-font-size: 14px;" +
+                        "-fx-padding: 10px 0;" +
+                        "-fx-border-color: transparent;" +
+                        "-fx-border-width: 0;"
+        );
+
+        if (isX) {
+            playerXInput = input;
+            playerXInputBox = inputBox;
+        } else {
+            playerOInput = input;
+            playerOInputBox = inputBox;
+        }
 
         HBox row = new HBox(15, icon, label, inputBox);
         row.setAlignment(Pos.CENTER_LEFT);

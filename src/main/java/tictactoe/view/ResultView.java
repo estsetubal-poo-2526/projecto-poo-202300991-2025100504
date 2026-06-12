@@ -30,7 +30,7 @@ public class ResultView extends BorderPane {
         Label mainResultLabel = new Label(resultMessage);
         mainResultLabel.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white; -fx-alignment: center;");
 
-        Label congratsLabel = new Label(resultMessage.contains("Empate") ? "Bom jogo! 🤝" : "Parabéns! 🎉");
+        Label congratsLabel = new Label(resultMessage.contains("Empate") ? "Bom jogo!" : "Parabéns!");
         congratsLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #94a3b8;");
 
         Button playAgainButton = new Button("⟳  Jogar Novamente");
@@ -44,7 +44,7 @@ public class ResultView extends BorderPane {
                         "-fx-cursor: hand;"
         );
         playAgainButton.setPrefWidth(220);
-        playAgainButton.setOnAction(event -> controller.showConfig());
+        playAgainButton.setOnAction(event -> controller.restartGame());
 
         Button menuButton = new Button("🏠  Menu");
         menuButton.setStyle(

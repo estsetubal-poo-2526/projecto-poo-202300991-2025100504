@@ -220,7 +220,7 @@ public class GameView extends StackPane {
         }
 
         private void updateTurnLabel() {
-            turnLabel.setText("👤  Jogador atual: " + gameModel.getCurrentPlayer().getSymbol());
+            turnLabel.setText("👤  Jogador atual: " + gameModel.getCurrentPlayer().getName() + " (" + gameModel.getCurrentPlayer().getSymbol() + ")");
         }
 
         private void handleGameEnd() {
