@@ -41,7 +41,7 @@ public class GameView extends StackPane {
 
     private void loadPopSound() {
         try {
-            java.net.URL url = getClass().getResource("/resources/sounds/pop.wav");
+            java.net.URL url = getClass().getResource("/sounds/pop.wav");
             if (url != null) {
                 popSound = new AudioClip(url.toExternalForm());
                 popSound.setVolume(0.55);

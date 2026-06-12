@@ -68,11 +68,11 @@ public class MenuView extends StackPane {
         ImageView logoView = new ImageView();
         try {
             Image img = new Image(
-                    getClass().getResourceAsStream("/resources/images/tictactoe_logo.png")
+                    getClass().getResourceAsStream("/images/tictactoe_logo.png")
             );
             logoView.setImage(img);
         } catch (Exception ignored) {
-            
+
         }
         logoView.setFitWidth(160);
         logoView.setFitHeight(160);
