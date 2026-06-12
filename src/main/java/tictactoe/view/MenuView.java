@@ -32,9 +32,9 @@ public class MenuView extends StackPane {
         
         HBox titleBox = new HBox(0);
         titleBox.setAlignment(Pos.CENTER);
-        Label part1 = new Label("Jogo do ");
+        Label part1 = new Label("Tic Tac ");
         part1.setStyle("-fx-font-size: 64px; -fx-font-weight: 900; -fx-text-fill: white;");
-        Label part2 = new Label("Galo");
+        Label part2 = new Label("Toe");
         part2.setStyle("-fx-font-size: 64px; -fx-font-weight: 900; -fx-text-fill: #3b82f6;");
         part2.setEffect(new DropShadow(20, Color.web("#3b82f6", 0.6)));
         titleBox.getChildren().addAll(part1, part2);
